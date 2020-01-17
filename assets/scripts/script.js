@@ -6,12 +6,15 @@ var choiceEl = document.getElementById('answerChoices')
 
 var shuffledQuestions, currentQuestionIndex
 
+// click listeners for start and next buttons
 startButton.addEventListener('click', startQuiz)
 nextButton.addEventListener('click', () => {
   currentQuestionIndex++
   nextQuestion()
 })
 
+// function that starts the quiz by hiding the start button and un-hides the list of questions/answers
+// also shuffles the possible questions on each start
 function startQuiz() {
   startButton.classList.add('hide')
   shuffledQuestions = questions.sort(() => Math.random() - .5)
@@ -20,11 +23,13 @@ function startQuiz() {
   nextQuestion()
 }
 
+// selects the next question and invokes the reset function
 function nextQuestion() {
   resetState()
   displayQuestions(shuffledQuestions[currentQuestionIndex])
 }
 
+// displays the question to the page, and for each possible answer creates a button
 function displayQuestions(question) {
   questionElement.innerText = question.question
   question.answers.forEach(answer => {
@@ -39,6 +44,7 @@ function displayQuestions(question) {
   })
 }
 
+// removes the previous questions answers by 'resetting' the page
 function resetState() {
   nextButton.classList.add('hide')
   while (choiceEl.firstChild) {
@@ -46,6 +52,7 @@ function resetState() {
   }
 }
 
+// continues to cycle through answers until none are left, switch startButton to Submit
 function selectAnswer() {
   if (shuffledQuestions.length > currentQuestionIndex + 1) {
     nextButton.classList.remove('hide')
